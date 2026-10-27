@@ -32,11 +32,12 @@
   --text-muted:     #8a877f;
   --text-faint:     #b8b4a9;
 
-  /* Claude signature terracotta accent */
-  --accent:         #cc6443;
-  --accent-hover:   #b65536;
-  --accent-soft:    rgba(204, 100, 67, 0.08);
-  --accent-border:  rgba(204, 100, 67, 0.25);
+  /* Refined antique gold accent */
+  --accent:          #b58922;
+  --accent-hover:    #9e751a;
+  --accent-soft:     rgba(181, 137, 34, 0.09);
+  --accent-border:   rgba(181, 137, 34, 0.28);
+  --accent-contrast: #ffffff;
 
   --ham-text:       #196c39;
   --ham-bg:         #eaf5ed;
@@ -68,11 +69,12 @@
   --text-muted:     #7f9886;  /* Henna leaf tone */
   --text-faint:     #4d6454;
 
-  /* Warm henna terracotta / olive gold accent */
-  --accent:         #df7d5c;
-  --accent-hover:   #eb8f70;
-  --accent-soft:    rgba(223, 125, 92, 0.12);
-  --accent-border:  rgba(223, 125, 92, 0.28);
+  /* Luminous royal gold / gilded henna accent */
+  --accent:          #dfb15b;
+  --accent-hover:    #ecc26e;
+  --accent-soft:     rgba(223, 177, 91, 0.14);
+  --accent-border:   rgba(223, 177, 91, 0.32);
+  --accent-contrast: #0c1611;
 
   --ham-text:       #6ee7a0;
   --ham-bg:         rgba(34, 197, 94, 0.12);

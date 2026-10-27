@@ -129,7 +129,7 @@
   height: 38px;
   border-radius: 50%;
   background: var(--accent);
-  color: #ffffff;
+  color: var(--accent-contrast, #ffffff);
   border: none;
   display: flex;
   align-items: center;
@@ -159,8 +159,8 @@
 .claude-spinner {
   width: 14px;
   height: 14px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #ffffff;
+  border: 2px solid rgba(120, 120, 120, 0.25);
+  border-top-color: var(--accent-contrast, #ffffff);
   border-radius: 50%;
   animation: spinSlow 0.75s linear infinite;
 }
