@@ -20,78 +20,76 @@ export default function HistoryPanel({ history, onReplay, onClear }) {
   })
 
   return (
-    <div className="ledger-wrap">
-      {/* Ledger Header & Ledger Stats */}
-      <div className="ledger-summary">
-        <div className="ledger-stat">
-          <span className="ledger-stat-val font-mono">{total}</span>
-          <span className="ledger-stat-lbl">Classified</span>
+    <div className="claude-history-container">
+      {/* Top summary metrics */}
+      <div className="history-metrics-row">
+        <div className="metric-box">
+          <span className="metric-val font-mono">{total}</span>
+          <span className="metric-label font-sans">Total Inquiries</span>
         </div>
-        <div className="ledger-stat-sep">/</div>
-        <div className="ledger-stat">
-          <span className="ledger-stat-val font-mono ledger-ham-val">{hamCount}</span>
-          <span className="ledger-stat-lbl">Ham</span>
+        <div className="metric-divider"></div>
+        <div className="metric-box">
+          <span className="metric-val font-mono val-ham">{hamCount}</span>
+          <span className="metric-label font-sans">Ham</span>
         </div>
-        <div className="ledger-stat-sep">/</div>
-        <div className="ledger-stat">
-          <span className="ledger-stat-val font-mono ledger-spam-val">{spamCount}</span>
-          <span className="ledger-stat-lbl">Spam</span>
+        <div className="metric-divider"></div>
+        <div className="metric-box">
+          <span className="metric-val font-mono val-spam">{spamCount}</span>
+          <span className="metric-label font-sans">Spam</span>
         </div>
-        <div className="ledger-stat-sep">/</div>
-        <div className="ledger-stat">
-          <span className="ledger-stat-val font-mono">{spamRate}%</span>
-          <span className="ledger-stat-lbl">Spam Rate</span>
+        <div className="metric-divider"></div>
+        <div className="metric-box">
+          <span className="metric-val font-mono">{spamRate}%</span>
+          <span className="metric-label font-sans">Spam Ratio</span>
         </div>
       </div>
 
-      {/* Filter and Clear controls */}
-      <div className="ledger-toolbar">
-        <div className="ledger-tabs">
+      {/* Filter and clear controls */}
+      <div className="history-controls-row">
+        <div className="history-tab-group">
           {['all', 'Ham', 'Spam'].map(f => (
             <button
               key={f}
-              className={`ledger-tab ${filter === f ? 'tab-selected' : ''}`}
+              className={`history-filter-btn font-sans ${filter === f ? 'filter-active' : ''}`}
               onClick={() => setFilter(f)}
             >
-              {f === 'all' ? 'All Records' : f}
+              {f === 'all' ? 'All' : f}
             </button>
           ))}
         </div>
 
         <button
-          className="ledger-clear-btn"
+          className="history-clear-btn font-sans"
           onClick={onClear}
-          title="Clear all stored logs"
         >
-          Clear Ledger
+          Clear History
         </button>
       </div>
 
-      {/* Ledger list */}
-      <div className="ledger-records">
+      {/* Record cards list */}
+      <div className="history-records-list">
         {filtered.length === 0 ? (
-          <p className="ledger-empty">No logged entries found under this filter.</p>
+          <p className="history-empty-message font-sans">No matching entries in history.</p>
         ) : (
           filtered.map(item => (
             <button
               key={item.id}
-              className={`ledger-row ${item.label === 'Spam' ? 'row-spam' : 'row-ham'}`}
+              className={`history-record-card ${item.label === 'Spam' ? 'record-spam' : 'record-ham'}`}
               onClick={() => onReplay(item)}
-              title="Click to inspect this record"
             >
-              <div className="row-meta">
-                <span className={`row-tag ${item.label === 'Spam' ? 'tag-spam' : 'tag-ham'}`}>
+              <div className="record-top-meta">
+                <span className={`record-pill font-mono ${item.label === 'Spam' ? 'pill-spam' : 'pill-ham'}`}>
                   {item.label}
                 </span>
-                <span className="row-certainty font-mono">
+                <span className="record-confidence font-mono">
                   {Math.round(item.confidence * 100)}%
                 </span>
-                <span className="row-time font-mono">
+                <span className="record-time font-mono">
                   {formatTimestamp(item.timestamp)}
                 </span>
               </div>
-              <p className="row-text">
-                {item.message.length > 90 ? item.message.slice(0, 90) + '…' : item.message}
+              <p className="record-snippet font-sans">
+                {item.message.length > 100 ? item.message.slice(0, 100) + '…' : item.message}
               </p>
             </button>
           ))

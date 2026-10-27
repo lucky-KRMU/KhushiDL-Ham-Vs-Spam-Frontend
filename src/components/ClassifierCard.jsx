@@ -1,11 +1,11 @@
 import { useRef, useCallback } from 'react'
 import './ClassifierCard.css'
 
-const EXAMPLES = [
-  { label: 'Ham', text: 'Hey, are we still meeting tomorrow at noon? Let me know!' },
-  { label: 'Ham', text: 'Could you send me the project report when you get a chance?' },
-  { label: 'Spam', text: 'WINNER! You\'ve been selected for a FREE £1000 gift card. Claim NOW.' },
-  { label: 'Spam', text: 'URGENT: Your account suspended. Click here to verify identity immediately.' },
+const SUGGESTIONS = [
+  { type: 'Ham', title: 'Team Meeting', text: 'Hey, are we still meeting tomorrow at 11am for the design review?' },
+  { type: 'Ham', title: 'Delivery Status', text: 'Your order #8291 has been shipped and is scheduled to arrive on Thursday.' },
+  { type: 'Spam', title: 'Prize Alert', text: 'URGENT: You have won a $1,000 cash voucher! Click http://claim-now.xyz to redeem.' },
+  { type: 'Spam', title: 'Account Suspension', text: 'Security Warning: Your bank account is locked. Verify details immediately to restore.' },
 ]
 
 const MAX_CHARS = 5000
@@ -19,88 +19,101 @@ export default function ClassifierCard({ message, onMessageChange, onClassify, l
   }, [message, onClassify])
 
   const handleKeyDown = useCallback((e) => {
-    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) onClassify(message)
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault()
+      onClassify(message)
+    }
   }, [message, onClassify])
 
-  const charCount   = message.length
+  const handleSelectExample = useCallback((text) => {
+    onMessageChange(text)
+    textareaRef.current?.focus()
+  }, [onMessageChange])
+
+  const charCount = message.length
   const isOverLimit = charCount > MAX_CHARS
-  const isReady     = message.trim().length > 0 && !isOverLimit && !loading
+  const isReady = message.trim().length > 0 && !isOverLimit && !loading
 
   return (
-    <div className="classifier-wrap">
-      {/* Header label */}
-      <div className="field-label-row">
-        <label htmlFor="msg-input" className="field-label">Message</label>
-        <span className="field-hint">Paste any SMS or email text below</span>
-      </div>
-
-      <form onSubmit={handleSubmit} className="classifier-form">
-        {/* Textarea */}
-        <div className="textarea-frame">
+    <div className="prompt-container">
+      {/* Claude-style Prompt Card */}
+      <form onSubmit={handleSubmit} className="claude-input-card">
+        <div className="input-body">
           <textarea
-            id="msg-input"
             ref={textareaRef}
-            className="msg-textarea"
+            className="claude-textarea font-sans"
             value={message}
             onChange={e => onMessageChange(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type or paste a message here…"
-            rows={6}
+            placeholder="Paste an SMS, email, or suspicious message to analyze..."
+            rows={4}
             disabled={loading}
             aria-label="Message to classify"
           />
+
           {message && (
             <button
               type="button"
-              className="textarea-clear"
-              onClick={() => { onMessageChange(''); textareaRef.current?.focus() }}
-              aria-label="Clear message"
-            >✕</button>
+              className="claude-clear-btn"
+              onClick={() => {
+                onMessageChange('')
+                textareaRef.current?.focus()
+              }}
+              aria-label="Clear input"
+            >
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                <path d="M4.646 4.646a.5.5 0 01.708 0L8 7.293l2.646-2.647a.5.5 0 01.708.708L8.707 8l2.647 2.646a.5.5 0 01-.708.708L8 8.707l-2.646 2.647a.5.5 0 01-.708-.708L7.293 8 4.646 5.354a.5.5 0 010-.708z"/>
+              </svg>
+            </button>
           )}
         </div>
 
-        {/* Footer row */}
-        <div className="form-footer">
-          <span className={`char-tally ${isOverLimit ? 'tally-over' : ''}`}>
-            {charCount.toLocaleString()} / {MAX_CHARS.toLocaleString()}
-          </span>
-          <div className="footer-right">
-            <span className="kbd-hint">
-              <kbd>⌘</kbd><kbd>↵</kbd>
+        {/* Action Tray */}
+        <div className="claude-action-tray">
+          <div className="tray-left">
+            <span className={`char-indicator font-mono ${isOverLimit ? 'indicator-over' : ''}`}>
+              {charCount.toLocaleString()} / {MAX_CHARS.toLocaleString()}
             </span>
+          </div>
+
+          <div className="tray-right">
+            <span className="shortcut-tag font-mono">
+              <kbd>⌘</kbd> + <kbd>↵</kbd>
+            </span>
+
             <button
               type="submit"
-              className={`analyse-btn ${loading ? 'btn-busy' : ''}`}
+              className={`claude-send-btn ${loading ? 'btn-loading' : ''}`}
               disabled={!isReady}
+              aria-label="Classify message"
             >
-              {loading
-                ? <><span className="btn-spinner" aria-hidden="true" /> Analysing…</>
-                : 'Analyse'}
+              {loading ? (
+                <span className="claude-spinner" aria-hidden="true" />
+              ) : (
+                <svg viewBox="0 0 20 20" fill="none" width="16" height="16" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10 16V4M4 10l6-6 6 6" />
+                </svg>
+              )}
             </button>
           </div>
         </div>
       </form>
 
-      {/* Example messages */}
-      <div className="examples-wrap">
-        <div className="ornament" style={{ marginBottom: '0.875rem' }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-ghost)' }}>
-            Samples
-          </span>
-        </div>
-        <div className="examples-grid">
-          {EXAMPLES.map((ex, i) => (
+      {/* Suggested Prompts / Chips */}
+      <div className="prompt-suggestions">
+        <span className="suggestions-label font-sans">Quick test samples:</span>
+        <div className="suggestions-grid">
+          {SUGGESTIONS.map((item, idx) => (
             <button
-              key={i}
-              className={`example-row ${ex.label === 'Ham' ? 'ex-ham' : 'ex-spam'}`}
-              onClick={() => { onMessageChange(ex.text); textareaRef.current?.focus() }}
+              key={idx}
+              className={`suggestion-chip ${item.type === 'Ham' ? 'chip-ham' : 'chip-spam'}`}
+              onClick={() => handleSelectExample(item.text)}
+              type="button"
             >
-              <span className={`ex-badge ${ex.label === 'Ham' ? 'badge-ham' : 'badge-spam'}`}>
-                {ex.label}
+              <span className={`chip-badge font-mono ${item.type === 'Ham' ? 'badge-ham' : 'badge-spam'}`}>
+                {item.type}
               </span>
-              <span className="ex-text">
-                {ex.text.length > 55 ? ex.text.slice(0, 55) + '…' : ex.text}
-              </span>
+              <span className="chip-title font-sans">{item.title}</span>
             </button>
           ))}
         </div>

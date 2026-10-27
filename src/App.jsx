@@ -20,8 +20,11 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError]     = useState(null)
   const [history, setHistory] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('khushiHistory') || '[]') }
-    catch { return [] }
+    try {
+      return JSON.parse(localStorage.getItem('khushiHistory') || '[]')
+    } catch {
+      return []
+    }
   })
   const [showHistory, setShowHistory] = useState(false)
 
@@ -34,10 +37,12 @@ export default function App() {
     localStorage.setItem('khushiHistory', JSON.stringify(history.slice(0, 50)))
   }, [history])
 
-  const toggleTheme = useCallback(() => setTheme(t => t === 'dark' ? 'light' : 'dark'), [])
+  const toggleTheme = useCallback(() => {
+    setTheme(t => (t === 'dark' ? 'light' : 'dark'))
+  }, [])
 
   const classify = useCallback(async (text) => {
-    if (!text.trim()) return
+    if (!text || !text.trim()) return
     setLoading(true)
     setError(null)
     setResult(null)
@@ -48,19 +53,22 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text }),
       })
+
       if (!res.ok) {
         const body = await res.json().catch(() => ({}))
-        throw new Error(body.detail || `Server error ${res.status}`)
+        throw new Error(body.detail || `Server responded with ${res.status}`)
       }
+
       const data = await res.json()
       setResult(data)
+
       setHistory(prev => {
         const entry = { ...data, timestamp: new Date().toISOString(), id: Date.now() }
         const filtered = prev.filter(h => h.message !== data.message)
         return [entry, ...filtered].slice(0, 50)
       })
     } catch (err) {
-      setError(err.message || 'Failed to connect. Make sure the backend is running.')
+      setError(err.message || 'Could not reach backend API. Ensure the service is active.')
     } finally {
       setLoading(false)
     }
@@ -79,24 +87,22 @@ export default function App() {
   }, [])
 
   return (
-    <div className="app-root" style={{ position: 'relative', zIndex: 1 }}>
+    <div className="claude-app">
       <Header theme={theme} onToggleTheme={toggleTheme} />
 
-      <main className="main-wrap">
-        {/* ── Hero ── */}
-        <section className="hero-section">
-          <p className="issue-label">Deep Learning · Text Classification</p>
-          <h1 className="hero-title">
-            <span className="hero-title-top">Ham <em>V/s</em> Spam</span>
+      <main className="claude-main">
+        {/* Clean Claude-style Hero Header (no decorative stars or icons) */}
+        <section className="claude-hero">
+          <h1 className="claude-title font-serif">
+            KhushiDL <span className="title-accent">Ham V/s Spam</span>
           </h1>
-          <p className="hero-byline">
-            Feed a message. The oracle decides.
+          <p className="claude-subtitle font-sans">
+            Verify communications with deep neural language classification. Paste any SMS, text, or email below.
           </p>
-          <div className="ornament" style={{ maxWidth: '320px', margin: '0 auto' }}>✦</div>
         </section>
 
-        {/* ── Classifier Form ── */}
-        <section className="form-section">
+        {/* Claude Prompt / Classifier Card */}
+        <section className="claude-prompt-section">
           <ClassifierCard
             message={message}
             onMessageChange={setMessage}
@@ -105,23 +111,27 @@ export default function App() {
           />
         </section>
 
-        {/* ── Result ── */}
+        {/* Result view */}
         {(result || error) && (
-          <section className="result-section">
+          <section className="claude-result-section">
             <ResultCard result={result} error={error} />
           </section>
         )}
 
-        {/* ── History toggle ── */}
+        {/* History drawer toggle */}
         {history.length > 0 && (
-          <section className="history-section">
-            <button
-              className="history-toggle-btn"
-              onClick={() => setShowHistory(v => !v)}
-            >
-              <span>{showHistory ? '↑ Hide' : '↓ Show'} History</span>
-              <span className="history-count-pill">{history.length}</span>
-            </button>
+          <section className="claude-history-section">
+            <div className="history-header-bar">
+              <button
+                className="claude-history-toggle"
+                onClick={() => setShowHistory(v => !v)}
+              >
+                <span className="font-sans">
+                  {showHistory ? 'Hide Recent Verifications' : 'Show Recent Verifications'}
+                </span>
+                <span className="history-pill font-mono">{history.length}</span>
+              </button>
+            </div>
 
             {showHistory && (
               <HistoryPanel

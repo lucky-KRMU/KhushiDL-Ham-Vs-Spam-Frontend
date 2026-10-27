@@ -1,241 +1,232 @@
-/* ── Classifier Container ────────────────────────────── */
-.classifier-wrap {
+/* ── Claude-style Prompt Container ───────────────────────── */
+.prompt-container {
   width: 100%;
 }
 
-.field-label-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 0.65rem;
-}
-
-.field-label {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
-}
-
-.field-hint {
-  font-family: var(--font-body);
-  font-style: italic;
-  font-size: 0.9rem;
-  color: var(--text-ghost);
-}
-
-/* ── Textarea Frame ───────────────────────────────────── */
-.textarea-frame {
+.claude-input-card {
   position: relative;
-  background: var(--bg-input);
-  border: 1.5px solid var(--border-mid);
-  border-radius: 3px;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-default);
+  border-radius: 18px;
+  box-shadow: var(--shadow-prompt);
+  padding: 1.25rem 1.25rem 0.85rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
-.textarea-frame:focus-within {
+.claude-input-card:focus-within {
   border-color: var(--accent);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04), 0 0 0 3px var(--accent-light);
+  box-shadow: var(--shadow-prompt), 0 0 0 3px var(--accent-soft);
 }
 
-.msg-textarea {
+.input-body {
+  position: relative;
   width: 100%;
-  padding: 1rem 2.2rem 1rem 1.1rem;
+}
+
+.claude-textarea {
+  width: 100%;
+  min-height: 120px;
+  max-height: 380px;
   background: transparent;
   border: none;
   outline: none;
   color: var(--text-primary);
-  font-family: var(--font-body);
   font-size: 1.05rem;
-  line-height: 1.65;
+  line-height: 1.6;
   resize: vertical;
-  min-height: 150px;
+  padding-right: 2.2rem;
 }
 
-.msg-textarea::placeholder {
-  color: var(--text-ghost);
-  font-style: italic;
+.claude-textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.85;
 }
 
-.msg-textarea:disabled {
+.claude-textarea:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.textarea-clear {
+.claude-clear-btn {
   position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  background: none;
+  top: 0.25rem;
+  right: 0.25rem;
+  background: transparent;
   border: none;
-  color: var(--text-ghost);
-  font-size: 0.85rem;
-  cursor: pointer;
-  padding: 0.2rem 0.4rem;
-  border-radius: 2px;
-  transition: color 0.15s ease;
-}
-
-.textarea-clear:hover {
-  color: var(--text-primary);
-}
-
-/* ── Form Footer ──────────────────────────────────────── */
-.form-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 0.85rem;
-}
-
-.char-tally {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--text-ghost);
-  letter-spacing: 0.05em;
-}
-
-.char-tally.tally-over {
-  color: var(--spam-color);
-  font-weight: 700;
-}
-
-.footer-right {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-}
-
-.kbd-hint {
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--text-ghost);
-}
-
-.kbd-hint kbd {
-  padding: 0.1rem 0.35rem;
-  border: 1px solid var(--border-mid);
-  border-radius: 2px;
-  background: var(--bg-surface);
   color: var(--text-muted);
-}
-
-.analyse-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-family: var(--font-serif);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  padding: 0.55rem 1.4rem;
-  background: var(--text-primary);
-  color: var(--bg-page);
-  border: 1px solid var(--text-primary);
-  border-radius: 2px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow-sm);
-}
-
-.analyse-btn:hover:not(:disabled) {
-  opacity: 0.9;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-.analyse-btn:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.analyse-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.btn-busy {
-  cursor: wait !important;
-}
-
-.btn-spinner {
-  width: 12px;
-  height: 12px;
-  border: 1.5px solid currentColor;
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-/* ── Samples ─────────────────────────────────────────── */
-.examples-wrap {
-  margin-top: 2rem;
-}
-
-.examples-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.5rem;
-}
-
-@media (min-width: 580px) {
-  .examples-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.example-row {
+  padding: 0.35rem;
+  border-radius: 6px;
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.55rem 0.75rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-fine);
-  border-radius: 2px;
-  cursor: pointer;
-  text-align: left;
+  justify-content: center;
   transition: all 0.15s ease;
 }
 
-.example-row:hover {
-  border-color: var(--border-mid);
-  background: var(--bg-input);
+.claude-clear-btn:hover {
+  background: var(--bg-surface-sub);
+  color: var(--text-primary);
+}
+
+/* ── Claude Action Tray ─────────────────────────────────── */
+.claude-action-tray {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.tray-left {
+  display: flex;
+  align-items: center;
+}
+
+.char-indicator {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.indicator-over {
+  color: var(--spam-text);
+  font-weight: 600;
+}
+
+.tray-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.shortcut-tag {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.shortcut-tag kbd {
+  background: var(--bg-surface-sub);
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  padding: 0.15rem 0.35rem;
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 480px) {
+  .shortcut-tag {
+    display: none;
+  }
+}
+
+/* ── Claude Up-arrow Circular Send Button ──────────────── */
+.claude-send-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: all 0.18s ease;
+}
+
+.claude-send-btn:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.claude-send-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.claude-send-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.claude-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spinSlow 0.75s linear infinite;
+}
+
+/* ── Suggestions Chips ─────────────────────────────────── */
+.prompt-suggestions {
+  margin-top: 1.25rem;
+}
+
+.suggestions-label {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.65rem;
+}
+
+.suggestions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.suggestion-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s ease;
+}
+
+.suggestion-chip:hover {
+  background: var(--bg-surface-sub);
+  border-color: var(--border-strong);
   transform: translateY(-1px);
 }
 
-.ex-badge {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
+.chip-badge {
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 0.15rem 0.45rem;
-  border-radius: 2px;
-  flex-shrink: 0;
+  padding: 0.1rem 0.45rem;
+  border-radius: 9999px;
 }
 
 .badge-ham {
   background: var(--ham-bg);
-  color: var(--ham-color);
+  color: var(--ham-text);
   border: 1px solid var(--ham-border);
 }
 
 .badge-spam {
   background: var(--spam-bg);
-  color: var(--spam-color);
+  color: var(--spam-text);
   border: 1px solid var(--spam-border);
 }
 
-.ex-text {
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.chip-title {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
 }

@@ -1,186 +1,166 @@
 /* ============================================================
-   KhushiDL – Ham V/s Spam  |  Global Stylesheet
-   Tailwind CSS v4 + Vintage Editorial Design System
+   KhushiDL — Ham V/s Spam
+   Claude-inspired UI Architecture + Henna Green Dark Theme
    ============================================================ */
 
 @import "tailwindcss";
 
-/* ── Custom Design Tokens ──────────────────────────────────── */
 @theme {
-  --font-serif:  'Playfair Display', Georgia, 'Times New Roman', serif;
-  --font-body:   'EB Garamond', Georgia, serif;
-  --font-mono:   'Courier Prime', 'Courier New', monospace;
-
-  /* Light – warm cream / ink */
-  --color-cream-50:   #faf7f2;
-  --color-cream-100:  #f5f0e6;
-  --color-cream-200:  #ecddc8;
-  --color-cream-300:  #dfc9a8;
-  --color-ink-900:    #1a1108;
-  --color-ink-800:    #2c1f0e;
-  --color-ink-700:    #3d2f1a;
-  --color-ink-500:    #6b5136;
-  --color-ink-400:    #9b7a58;
-  --color-ink-300:    #c4a882;
-
-  /* Accent – warm sienna / rust */
-  --color-rust-700:   #7a2f14;
-  --color-rust-600:   #9b3d1f;
-  --color-rust-500:   #b8501e;
-  --color-rust-400:   #cc6a3a;
-
-  /* Dark mode surfaces */
-  --color-night-950:  #0d0b08;
-  --color-night-900:  #161209;
-  --color-night-800:  #211a0f;
-  --color-night-700:  #2e2418;
-  --color-night-600:  #3d3222;
+  --font-serif: 'Newsreader', Georgia, Cambria, 'Times New Roman', serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 }
 
-/* ── CSS Variables (theme-aware) ──────────────────────────── */
 :root {
   color-scheme: light dark;
 }
 
+/* ── Claude Light Palette (Warm Ivory / Paper / Stone) ─────── */
 [data-theme='light'] {
-  --bg-page:       #f5f0e6;
-  --bg-surface:    #faf7f2;
-  --bg-muted:      #ecddc8;
-  --bg-input:      #fffdf8;
-  --border-fine:   rgba(44, 31, 14, 0.12);
-  --border-mid:    rgba(44, 31, 14, 0.22);
-  --border-strong: rgba(44, 31, 14, 0.38);
-  --text-primary:  #1a1108;
-  --text-secondary:#3d2f1a;
-  --text-muted:    #6b5136;
-  --text-ghost:    #9b7a58;
-  --accent:        #9b3d1f;
-  --accent-light:  rgba(155, 61, 31, 0.10);
-  --accent-border: rgba(155, 61, 31, 0.30);
-  --ham-color:     #1a5c2e;
-  --ham-bg:        rgba(26, 92, 46, 0.08);
-  --ham-border:    rgba(26, 92, 46, 0.28);
-  --spam-color:    #7a2f14;
-  --spam-bg:       rgba(122, 47, 20, 0.08);
-  --spam-border:   rgba(122, 47, 20, 0.28);
-  --shadow-sm:     0 1px 3px rgba(44,31,14,0.06), 0 1px 2px rgba(44,31,14,0.04);
-  --shadow-md:     0 3px 12px rgba(44,31,14,0.10), 0 1px 4px rgba(44,31,14,0.06);
-  --shadow-lg:     0 8px 28px rgba(44,31,14,0.12), 0 2px 8px rgba(44,31,14,0.06);
+  --bg-page:        #faf9f5;
+  --bg-header:      rgba(250, 249, 245, 0.92);
+  --bg-surface:     #ffffff;
+  --bg-surface-sub: #f3f1ea;
+  --bg-input:       #ffffff;
+  
+  --border-subtle:  #eeebe2;
+  --border-default: #e4e0d4;
+  --border-strong:  #cfcab8;
+  
+  --text-primary:   #1f1e1c;
+  --text-secondary: #585651;
+  --text-muted:     #8a877f;
+  --text-faint:     #b8b4a9;
+
+  /* Claude signature terracotta accent */
+  --accent:         #cc6443;
+  --accent-hover:   #b65536;
+  --accent-soft:    rgba(204, 100, 67, 0.08);
+  --accent-border:  rgba(204, 100, 67, 0.25);
+
+  --ham-text:       #196c39;
+  --ham-bg:         #eaf5ed;
+  --ham-border:     #b6ddc3;
+
+  --spam-text:      #b33d24;
+  --spam-bg:        #fcf0ec;
+  --spam-border:    #f2c1b4;
+
+  --shadow-sm:      0 1px 2px rgba(31, 30, 28, 0.04);
+  --shadow-card:    0 4px 20px -2px rgba(31, 30, 28, 0.06), 0 1px 3px rgba(31, 30, 28, 0.03);
+  --shadow-prompt:  0 6px 24px -4px rgba(31, 30, 28, 0.08), 0 1px 3px rgba(31, 30, 28, 0.04);
 }
 
+/* ── Henna Green Dark Palette (Deep Organic Herbal Forest) ─── */
 [data-theme='dark'] {
-  --bg-page:       #0d0b08;
-  --bg-surface:    #161209;
-  --bg-muted:      #211a0f;
-  --bg-input:      #1c160d;
-  --border-fine:   rgba(196, 168, 130, 0.08);
-  --border-mid:    rgba(196, 168, 130, 0.14);
-  --border-strong: rgba(196, 168, 130, 0.24);
-  --text-primary:  #e8dcc8;
-  --text-secondary:#c4a882;
-  --text-muted:    #8a7058;
-  --text-ghost:    #5c4a34;
-  --accent:        #cc6a3a;
-  --accent-light:  rgba(204, 106, 58, 0.12);
-  --accent-border: rgba(204, 106, 58, 0.30);
-  --ham-color:     #5aad7a;
-  --ham-bg:        rgba(90, 173, 122, 0.10);
-  --ham-border:    rgba(90, 173, 122, 0.25);
-  --spam-color:    #d4755a;
-  --spam-bg:       rgba(212, 117, 90, 0.10);
-  --spam-border:   rgba(212, 117, 90, 0.25);
-  --shadow-sm:     0 1px 3px rgba(0,0,0,0.30);
-  --shadow-md:     0 3px 12px rgba(0,0,0,0.45);
-  --shadow-lg:     0 8px 28px rgba(0,0,0,0.55);
+  --bg-page:        #0c1611;  /* Deep henna herbal base */
+  --bg-header:      rgba(12, 22, 17, 0.92);
+  --bg-surface:     #13221a;  /* Rich henna dark green */
+  --bg-surface-sub: #182b21;  /* Layered henna olive */
+  --bg-input:       #172a20;  /* Input container */
+  
+  --border-subtle:  #1d3327;
+  --border-default: #264334;
+  --border-strong:  #365d48;
+  
+  --text-primary:   #edf3ee;  /* Crisp pale sage */
+  --text-secondary: #b5c7ba;  /* Muted sage */
+  --text-muted:     #7f9886;  /* Henna leaf tone */
+  --text-faint:     #4d6454;
+
+  /* Warm henna terracotta / olive gold accent */
+  --accent:         #df7d5c;
+  --accent-hover:   #eb8f70;
+  --accent-soft:    rgba(223, 125, 92, 0.12);
+  --accent-border:  rgba(223, 125, 92, 0.28);
+
+  --ham-text:       #6ee7a0;
+  --ham-bg:         rgba(34, 197, 94, 0.12);
+  --ham-border:     rgba(34, 197, 94, 0.28);
+
+  --spam-text:      #fca58f;
+  --spam-bg:        rgba(239, 68, 68, 0.12);
+  --spam-border:    rgba(239, 68, 68, 0.28);
+
+  --shadow-sm:      0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-card:    0 6px 24px -2px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.25);
+  --shadow-prompt:  0 8px 32px -4px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
-/* ── Reset & Base ──────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── Base resets & styles ─────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 body {
-  font-family: var(--font-body);
-  background: var(--bg-page);
+  font-family: var(--font-sans);
+  background-color: var(--bg-page);
   color: var(--text-primary);
   min-height: 100vh;
-  font-size: 18px;
-  line-height: 1.7;
-  transition: background 0.4s ease, color 0.25s ease;
+  line-height: 1.6;
+  transition: background-color 0.35s ease, color 0.2s ease;
 }
 
-/* ── Noise / grain texture overlay ── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.022;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px;
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
-
-/* ── Scrollbar ── */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 ::-webkit-scrollbar-thumb {
-  background: var(--border-mid);
-  border-radius: 10px;
+  background: var(--border-default);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
 }
 
-/* ── Selection ── */
+/* ── Selection & Focus ────────────────────────────────────── */
 ::selection {
-  background: var(--accent-light);
+  background: var(--accent-soft);
   color: var(--text-primary);
 }
 
-/* ── Focus ── */
 :focus-visible {
-  outline: 1.5px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 2px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-/* ── Typography helpers ── */
-.font-serif  { font-family: var(--font-serif) !important; }
-.font-body   { font-family: var(--font-body) !important; }
-.font-mono   { font-family: var(--font-mono) !important; }
-
-/* ── Animations ── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* ── Typography helpers ───────────────────────────────────── */
+.font-serif {
+  font-family: var(--font-serif) !important;
+}
+.font-sans {
+  font-family: var(--font-sans) !important;
+}
+.font-mono {
+  font-family: var(--font-mono) !important;
 }
 
-@keyframes stampIn {
-  0%   { opacity: 0; transform: scale(1.4) rotate(-3deg); }
-  60%  { transform: scale(0.97) rotate(0deg); }
-  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+/* ── Claude Animations ────────────────────────────────────── */
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(10px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-/* ── Ornament / rule ── */
-.ornament {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  color: var(--text-ghost);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-}
-.ornament::before,
-.ornament::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border-mid);
+@keyframes spinSlow {
+  to {
+    transform: rotate(360deg);
+  }
 }

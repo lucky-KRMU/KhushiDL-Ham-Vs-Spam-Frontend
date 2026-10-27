@@ -1,17 +1,17 @@
 # KhushiDL — Ham V/s Spam
 
-A vintage editorial, aesthetic text classification interface powered by deep learning. Built with React, Vite, and Tailwind CSS.
+A Claude-inspired, professional text classification interface powered by deep learning. Built with React, Vite, and Tailwind CSS.
 
 ---
 
 ## ✨ Features
 
-- **Typography & Aesthetic**: Editorial serif typography (*Playfair Display*, *EB Garamond*, *Courier Prime*), warm cream & ink color scheme for light mode, rich night tones for dark mode, subtle noise texture, and ink-stamp motifs.
-- **Old-School Layout**: Balanced, centered editorial structure aligned for focused reading and input.
-- **Classification Engine**: Fast inference connected to the FastAPI deep learning backend.
-- **Certainty Quotient**: Vintage gauge indicator displaying prediction confidence.
-- **Ledger & History**: Log of recent classifications with live tally stats (total, ham, spam, spam rate).
-- **Dark & Light Mode**: Warm newspaper/parchment light theme and cozy vintage dark theme, with system preference detection and localStorage persistence.
+- **Claude-Inspired Interface**: Clean, warm, and thoughtful UI with calm prompt card input, circular send action button, and conversational result cards.
+- **Full-Width Navigation**: Expanded 72px-height navbar spanning the entire viewport width with serif branding (`KhushiDL / Ham V/s Spam`).
+- **Henna Green Dark Theme**: A deep, rich, organic herbal green theme (`#0c1611`, `#13221a`) paired with warm terracotta accents and pale sage typography, alongside an ivory/stone light mode.
+- **Deep Learning Classifier**: Powered by a pre-trained Keras model served via FastAPI.
+- **Confidence Meter**: Visual certainty metric indicating model confidence percentage.
+- **History Drawer**: Collapsible recent classification log with Ham, Spam, and Spam Ratio metrics.
 
 ---
 
@@ -23,22 +23,3 @@ npm run dev
 ```
 
 Open → **http://localhost:5173**
-
-### Connect to Backend
-
-```bash
-# Copy the example env file
-cp .env.example .env.local
-
-# Edit .env.local and set your backend URL:
-# VITE_API_URL=https://your-render-service.onrender.com
-```
-
----
-
-## 📦 Build for Production
-
-```bash
-npm run build
-# Output is generated in ./dist
-```

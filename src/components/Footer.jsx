@@ -2,22 +2,19 @@ import './Footer.css'
 
 export default function Footer() {
   return (
-    <footer className="site-footer">
-      <div className="footer-ornament">
-        <span className="line" />
-        <span className="symbol">❦</span>
-        <span className="line" />
-      </div>
-
-      <div className="footer-inner">
-        <div className="footer-col-left">
-          <p className="footer-title font-serif">KhushiDL</p>
-          <p className="footer-desc">Ham V/s Spam · Deep Learning Text Classification</p>
+    <footer className="claude-footer">
+      <div className="claude-footer-row">
+        <div className="footer-left">
+          <span className="footer-brand font-serif">KhushiDL</span>
+          <span className="footer-tagline font-sans">Ham V/s Spam · Deep Learning Text Classification</span>
         </div>
 
-        <div className="footer-col-right font-mono">
-          <span>Model: Keras Sequential / Dense</span>
-          <span>Engine: FastAPI</span>
+        <div className="footer-right font-mono">
+          <span>FastAPI</span>
+          <span>·</span>
+          <span>TensorFlow</span>
+          <span>·</span>
+          <span>React</span>
         </div>
       </div>
     </footer>

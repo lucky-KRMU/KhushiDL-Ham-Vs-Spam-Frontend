@@ -3,13 +3,12 @@ import './ResultCard.css'
 export default function ResultCard({ result, error }) {
   if (error) {
     return (
-      <div className="verdict-card verdict-error" role="alert">
-        <div className="verdict-banner">
-          <span className="verdict-flag">Fault</span>
-          <span className="verdict-stamp-code">ERR-500</span>
+      <div className="claude-result-card result-error-card" role="alert">
+        <div className="card-top-bar">
+          <span className="error-pill font-mono">Connection Error</span>
         </div>
-        <h3 className="verdict-headline font-serif">Transmission Failure</h3>
-        <p className="verdict-subtext">{error}</p>
+        <h3 className="result-heading font-serif">Unable to complete classification</h3>
+        <p className="error-description font-sans">{error}</p>
       </div>
     )
   }
@@ -21,59 +20,55 @@ export default function ResultCard({ result, error }) {
 
   return (
     <div
-      className={`verdict-card ${isSpam ? 'verdict-spam' : 'verdict-ham'}`}
+      className={`claude-result-card ${isSpam ? 'result-spam-card' : 'result-ham-card'}`}
       role="alert"
       aria-live="polite"
     >
-      <div className="verdict-border-top">
-        <span className="border-ornament">◈</span>
+      {/* Top bar with label tag */}
+      <div className="card-top-bar">
+        <div className="result-badge-wrap">
+          <span className={`verdict-pill font-mono ${isSpam ? 'pill-spam' : 'pill-ham'}`}>
+            {isSpam ? 'Flagged as Spam' : 'Verified as Ham'}
+          </span>
+        </div>
+
+        <span className="analysis-model font-mono">
+          Model: TensorFlow Keras
+        </span>
       </div>
 
-      <div className="verdict-content">
-        <div className="verdict-header">
-          <div>
-            <span className="verdict-pretitle">Classification Ruling</span>
-            <h2 className="verdict-title font-serif">{result.label}</h2>
-          </div>
-
-          <div className={`verdict-stamp ${isSpam ? 'stamp-spam' : 'stamp-ham'}`}>
-            <span className="stamp-inner">{isSpam ? 'SPAM' : 'HAM'}</span>
-          </div>
-        </div>
-
-        <p className="verdict-analysis">
-          {isSpam ? (
-            <>
-              This dispatch carries markers typical of unsolicited solicitation or fraudulent spam.
-            </>
-          ) : (
-            <>
-              This dispatch is evaluated as authentic, legitimate personal or operational correspondence.
-            </>
-          )}
+      {/* Main Verdict Headline */}
+      <div className="result-main-info">
+        <h2 className="result-heading font-serif">
+          {isSpam ? 'Suspected Spam Message' : 'Legitimate Communication'}
+        </h2>
+        <p className="result-narrative font-sans">
+          {isSpam
+            ? 'The language patterns in this message correspond closely to common spam campaigns, unsolicited offers, or credential phishing attempts.'
+            : 'The language patterns in this message are consistent with legitimate, routine personal or professional communication.'}
         </p>
+      </div>
 
-        {/* Confidence Gauge */}
-        <div className="confidence-block">
-          <div className="confidence-meta">
-            <span className="confidence-title">Certainty Quotient</span>
-            <span className="confidence-score font-mono">{confidencePct}%</span>
-          </div>
-          <div className="confidence-groove">
-            <div
-              className="confidence-needle"
-              style={{ width: `${confidencePct}%` }}
-            />
-          </div>
+      {/* Confidence meter */}
+      <div className="confidence-container">
+        <div className="confidence-header">
+          <span className="confidence-title font-sans">Confidence Level</span>
+          <span className="confidence-pct font-mono">{confidencePct}%</span>
         </div>
+        <div className="confidence-bar-track">
+          <div
+            className={`confidence-bar-fill ${isSpam ? 'fill-spam' : 'fill-ham'}`}
+            style={{ width: `${confidencePct}%` }}
+          />
+        </div>
+      </div>
 
-        {/* Snippet Preview */}
-        <div className="verdict-excerpt">
-          <span className="excerpt-label">Transcribed Record</span>
-          <p className="excerpt-quote">
-            “{result.message.length > 240 ? result.message.slice(0, 240) + '…' : result.message}”
-          </p>
-        </div>
+      {/* Quoted message excerpt */}
+      <div className="analyzed-excerpt-block">
+        <span className="excerpt-header-label font-sans">Analyzed Message Text</span>
+        <blockquote className="excerpt-quote-text font-sans">
+          “{result.message}”
+        </blockquote>
       </div>
     </div>
   )

@@ -1,110 +1,106 @@
-/* ── Vintage Ledger / History Panel ──────────────────── */
-.ledger-wrap {
+/* ── Claude History / Recents Drawer ─────────────────────── */
+.claude-history-container {
   background: var(--bg-surface);
-  border: 1px solid var(--border-mid);
-  border-radius: 3px;
-  padding: 1.25rem;
-  box-shadow: var(--shadow-sm);
-  animation: slideIn 0.3s ease both;
+  border: 1px solid var(--border-default);
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem 1.5rem;
+  animation: fadeInSlide 0.25s ease both;
 }
 
-/* ── Summary Tally ── */
-.ledger-summary {
+/* ── Metrics Row ─────────────────────────────────────── */
+.history-metrics-row {
   display: flex;
   align-items: center;
   justify-content: space-around;
   padding-bottom: 1rem;
-  border-bottom: 1px dashed var(--border-mid);
+  border-bottom: 1px solid var(--border-subtle);
   margin-bottom: 1rem;
 }
 
-.ledger-stat {
+.metric-box {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.15rem;
 }
 
-.ledger-stat-val {
-  font-size: 1.4rem;
+.metric-val {
+  font-size: 1.35rem;
   font-weight: 700;
   line-height: 1;
   color: var(--text-primary);
 }
 
-.ledger-ham-val  { color: var(--ham-color); }
-.ledger-spam-val { color: var(--spam-color); }
+.val-ham  { color: var(--ham-text); }
+.val-spam { color: var(--spam-text); }
 
-.ledger-stat-lbl {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-ghost);
+.metric-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
 }
 
-.ledger-stat-sep {
-  color: var(--border-mid);
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
+.metric-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border-subtle);
 }
 
-/* ── Toolbar ── */
-.ledger-toolbar {
+/* ── Controls Row ────────────────────────────────────── */
+.history-controls-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.85rem;
 }
 
-.ledger-tabs {
+.history-tab-group {
   display: flex;
   gap: 0.35rem;
 }
 
-.ledger-tab {
-  background: none;
+.history-filter-btn {
+  background: transparent;
   border: 1px solid transparent;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  color: var(--text-ghost);
-  padding: 0.25rem 0.6rem;
-  border-radius: 2px;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 500;
+  padding: 0.3rem 0.7rem;
+  border-radius: 9999px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
-.ledger-tab:hover {
+.history-filter-btn:hover {
+  background: var(--bg-surface-sub);
   color: var(--text-primary);
-  border-color: var(--border-fine);
 }
 
-.ledger-tab.tab-selected {
-  border-color: var(--border-strong);
+.history-filter-btn.filter-active {
+  background: var(--bg-surface-sub);
   color: var(--text-primary);
-  background: var(--bg-muted);
+  border-color: var(--border-default);
 }
 
-.ledger-clear-btn {
-  background: none;
+.history-clear-btn {
+  background: transparent;
   border: none;
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-ghost);
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--text-muted);
   cursor: pointer;
-  padding: 0.2rem 0.4rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
   transition: color 0.15s ease;
 }
 
-.ledger-clear-btn:hover {
-  color: var(--spam-color);
+.history-clear-btn:hover {
+  color: var(--spam-text);
 }
 
-/* ── Records ── */
-.ledger-records {
+/* ── List ─────────────────────────────────────────────── */
+.history-records-list {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -113,86 +109,60 @@
   padding-right: 0.25rem;
 }
 
-.ledger-empty {
+.history-empty-message {
   text-align: center;
-  font-family: var(--font-body);
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--text-ghost);
+  color: var(--text-muted);
+  font-size: 0.88rem;
   padding: 1.5rem 0;
 }
 
-.ledger-row {
+.history-record-card {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  padding: 0.75rem 0.85rem;
-  background: var(--bg-input);
-  border: 1px solid var(--border-fine);
-  border-radius: 2px;
+  padding: 0.75rem 0.95rem;
+  background: var(--bg-surface-sub);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
   cursor: pointer;
   text-align: left;
   transition: all 0.15s ease;
 }
 
-.ledger-row:hover {
-  border-color: var(--border-mid);
+.history-record-card:hover {
+  border-color: var(--border-default);
   transform: translateX(2px);
 }
 
-.row-spam:hover {
-  border-color: var(--spam-border);
-  background: var(--spam-bg);
-}
-
-.row-ham:hover {
-  border-color: var(--ham-border);
-  background: var(--ham-bg);
-}
-
-.row-meta {
+.record-top-meta {
   display: flex;
   align-items: center;
   gap: 0.65rem;
 }
 
-.row-tag {
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
+.record-pill {
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 0.1rem 0.4rem;
-  border-radius: 2px;
+  padding: 0.1rem 0.45rem;
+  border-radius: 9999px;
 }
 
-.tag-ham {
-  background: var(--ham-bg);
-  color: var(--ham-color);
-  border: 1px solid var(--ham-border);
-}
-
-.tag-spam {
-  background: var(--spam-bg);
-  color: var(--spam-color);
-  border: 1px solid var(--spam-border);
-}
-
-.row-certainty {
-  font-size: 0.72rem;
-  font-weight: 700;
+.record-confidence {
+  font-size: 0.74rem;
+  font-weight: 600;
   color: var(--text-muted);
 }
 
-.row-time {
-  font-size: 0.65rem;
-  color: var(--text-ghost);
+.record-time {
+  font-size: 0.68rem;
+  color: var(--text-muted);
   margin-left: auto;
 }
 
-.row-text {
-  font-family: var(--font-body);
-  font-size: 0.9rem;
+.record-snippet {
+  font-size: 0.86rem;
   color: var(--text-secondary);
-  line-height: 1.45;
+  line-height: 1.5;
 }

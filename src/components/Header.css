@@ -1,90 +1,147 @@
-.site-header {
+/* ── Full-Width Claude-style Navigation Bar ─────────── */
+.claude-header {
   position: sticky;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 72px; /* Increased height */
+  background: var(--bg-header);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
   z-index: 100;
-  background: var(--bg-page);
-  transition: background 0.4s ease;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.35s ease, border-color 0.2s ease;
 }
 
-.header-inner {
-  max-width: 680px;
+.header-full-row {
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 1rem 1.25rem 0.75rem;
+  padding: 0 1.75rem;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .header-full-row {
+    padding: 0 2.5rem;
+  }
+}
+
+/* ── Brand Group (Serif Font) ─────────────────────────── */
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.brand-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.brand-divider {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  opacity: 0.6;
+  user-select: none;
+}
+
+.brand-project {
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+.model-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  background: var(--bg-surface-sub);
+  color: var(--text-muted);
+  border: 1px solid var(--border-default);
+  margin-left: 0.35rem;
+}
+
+@media (max-width: 640px) {
+  .model-badge {
+    display: none;
+  }
+}
+
+/* ── Right Navigation Actions ─────────────────────────── */
+.header-right {
+  display: flex;
+  align-items: center;
   gap: 1rem;
 }
 
-/* ── Brand ── */
-.header-brand {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-
-.brand-name {
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-}
-
-.brand-sep {
-  color: var(--text-ghost);
-  font-size: 0.85rem;
-}
-
-.brand-tagline {
-  font-family: var(--font-body);
-  font-style: italic;
-  font-size: 0.875rem;
-  color: var(--text-muted);
-}
-
-/* ── Theme Button ── */
-.theme-btn {
+.status-indicator {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  background: none;
-  border: 1px solid var(--border-mid);
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 0.3rem 0.65rem;
-  border-radius: 2px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  gap: 0.45rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  background: var(--ham-bg);
+  border: 1px solid var(--ham-border);
 }
 
-.theme-btn:hover {
-  border-color: var(--border-strong);
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ham-text);
+  box-shadow: 0 0 6px var(--ham-text);
+}
+
+.status-text {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ham-text);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 500px) {
+  .status-indicator {
+    display: none;
+  }
+}
+
+.claude-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 9999px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
   color: var(--text-secondary);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.18s ease;
 }
 
-/* ── Decorative Rule ── */
-.header-rule {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 0 1.25rem;
+.claude-theme-toggle:hover {
+  background: var(--bg-surface-sub);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
 }
 
-.rule-line {
-  flex: 1;
-  height: 1px;
-  background: var(--border-mid);
-}
-
-.rule-diamond {
-  font-size: 0.45rem;
-  color: var(--text-ghost);
-  line-height: 1;
-  transform: translateY(0.5px);
+.theme-toggle-label {
+  font-size: 0.78rem;
+  font-weight: 500;
 }
