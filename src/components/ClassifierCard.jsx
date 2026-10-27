@@ -10,7 +10,7 @@ const SUGGESTIONS = [
 
 const MAX_CHARS = 5000
 
-export default function ClassifierCard({ message, onMessageChange, onClassify, loading }) {
+export default function ClassifierCard({ message, onMessageChange, onClassify, loading, isWakingUp }) {
   const textareaRef = useRef(null)
 
   const handleSubmit = useCallback((e) => {
@@ -67,6 +67,14 @@ export default function ClassifierCard({ message, onMessageChange, onClassify, l
             </button>
           )}
         </div>
+
+        {/* Cold-start notification */}
+        {isWakingUp && (
+          <div className="waking-notice font-sans" role="status">
+            <span className="waking-dot"></span>
+            <span>Waking Render cloud instance (free tier takes ~30s on cold start)...</span>
+          </div>
+        )}
 
         {/* Action Tray */}
         <div className="claude-action-tray">

@@ -78,6 +78,31 @@
   color: var(--text-primary);
 }
 
+/* ── Waking Cloud Notice ────────────────────────────────── */
+.waking-notice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  font-size: 0.8rem;
+  animation: fadeInSlide 0.25s ease both;
+}
+
+.waking-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  animation: pulseDot 1.2s infinite ease-in-out;
+  flex-shrink: 0;
+}
+
 /* ── Claude Action Tray ─────────────────────────────────── */
 .claude-action-tray {
   display: flex;

@@ -98,6 +98,7 @@
   border-radius: 9999px;
   background: var(--ham-bg);
   border: 1px solid var(--ham-border);
+  transition: all 0.3s ease;
 }
 
 .status-dot {
@@ -113,6 +114,51 @@
   font-weight: 600;
   color: var(--ham-text);
   letter-spacing: 0.02em;
+}
+
+/* Waking / Cold-start state */
+.status-waking {
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+}
+.status-waking .status-dot {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  animation: pulseDot 1.4s infinite ease-in-out;
+}
+.status-waking .status-text {
+  color: var(--accent);
+}
+
+/* Checking state */
+.status-checking {
+  background: var(--bg-surface-sub);
+  border-color: var(--border-default);
+}
+.status-checking .status-dot {
+  background: var(--text-muted);
+  box-shadow: none;
+}
+.status-checking .status-text {
+  color: var(--text-muted);
+}
+
+/* Offline state */
+.status-offline {
+  background: var(--spam-bg);
+  border-color: var(--spam-border);
+}
+.status-offline .status-dot {
+  background: var(--spam-text);
+  box-shadow: 0 0 6px var(--spam-text);
+}
+.status-offline .status-text {
+  color: var(--spam-text);
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.55; }
 }
 
 @media (max-width: 500px) {

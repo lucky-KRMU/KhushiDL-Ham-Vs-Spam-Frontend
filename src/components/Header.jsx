@@ -1,6 +1,20 @@
 import './Header.css'
 
-export default function Header({ theme, onToggleTheme }) {
+export default function Header({ theme, onToggleTheme, serverStatus = 'online' }) {
+  const getStatusLabel = () => {
+    switch (serverStatus) {
+      case 'online':
+        return 'Cloud Online'
+      case 'waking':
+        return 'Waking Server...'
+      case 'checking':
+        return 'Connecting...'
+      case 'offline':
+      default:
+        return 'Reconnecting...'
+    }
+  }
+
   return (
     <header className="claude-header">
       <div className="header-full-row">
@@ -14,9 +28,9 @@ export default function Header({ theme, onToggleTheme }) {
 
         {/* Right: Actions */}
         <div className="header-right">
-          <div className="status-indicator">
+          <div className={`status-indicator status-${serverStatus}`} title="Live backend status on Render">
             <span className="status-dot"></span>
-            <span className="status-text font-sans">Online</span>
+            <span className="status-text font-sans">{getStatusLabel()}</span>
           </div>
 
           <button
