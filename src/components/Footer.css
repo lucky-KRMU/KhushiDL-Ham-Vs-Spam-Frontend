@@ -1,53 +1,63 @@
-.footer {
-  border-top: 1px solid var(--border-subtle);
-  background: var(--bg-surface);
-  position: relative;
-  z-index: 1;
+/* ── Vintage Editorial Footer ────────────────────────── */
+.site-footer {
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 1.25rem 2.5rem;
+}
+
+.footer-ornament {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-ornament .line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-mid);
+}
+
+.footer-ornament .symbol {
+  font-size: 0.85rem;
+  color: var(--text-ghost);
 }
 
 .footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.25rem 1.5rem;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
-  gap: 1rem;
   flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.footer-left {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.footer-logo {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.825rem;
+.footer-title {
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
-}
-
-.footer-sep {
-  color: var(--text-muted);
+  margin-bottom: 0.15rem;
 }
 
 .footer-desc {
-  font-size: 0.8rem;
-  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--text-ghost);
 }
 
-.footer-right {
-  font-size: 0.775rem;
-  color: var(--text-muted);
-}
-
-.footer-note {
+.footer-col-right {
   display: flex;
-  align-items: center;
-  gap: 0.3rem;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--text-ghost);
+  text-align: right;
+}
+
+@media (max-width: 500px) {
+  .footer-col-right {
+    text-align: left;
+  }
 }

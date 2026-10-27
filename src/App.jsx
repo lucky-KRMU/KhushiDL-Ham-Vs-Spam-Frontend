@@ -3,7 +3,6 @@ import Header from './components/Header.jsx'
 import ClassifierCard from './components/ClassifierCard.jsx'
 import ResultCard from './components/ResultCard.jsx'
 import HistoryPanel from './components/HistoryPanel.jsx'
-import StatsBar from './components/StatsBar.jsx'
 import Footer from './components/Footer.jsx'
 import './App.css'
 
@@ -11,37 +10,31 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
-    const saved = localStorage.getItem('hvsTheme')
+    const saved = localStorage.getItem('khushiTheme')
     if (saved) return saved
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   })
 
   const [message, setMessage] = useState('')
-  const [result, setResult]   = useState(null)   // { label, confidence, message }
+  const [result, setResult]   = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError]     = useState(null)
   const [history, setHistory] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('hvsHistory') || '[]')
-    } catch {
-      return []
-    }
+    try { return JSON.parse(localStorage.getItem('khushiHistory') || '[]') }
+    catch { return [] }
   })
+  const [showHistory, setShowHistory] = useState(false)
 
-  // Apply theme
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem('hvsTheme', theme)
+    localStorage.setItem('khushiTheme', theme)
   }, [theme])
 
-  // Persist history
   useEffect(() => {
-    localStorage.setItem('hvsHistory', JSON.stringify(history.slice(0, 50)))
+    localStorage.setItem('khushiHistory', JSON.stringify(history.slice(0, 50)))
   }, [history])
 
-  const toggleTheme = useCallback(() => {
-    setTheme(t => (t === 'dark' ? 'light' : 'dark'))
-  }, [])
+  const toggleTheme = useCallback(() => setTheme(t => t === 'dark' ? 'light' : 'dark'), [])
 
   const classify = useCallback(async (text) => {
     if (!text.trim()) return
@@ -55,23 +48,19 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text }),
       })
-
       if (!res.ok) {
         const body = await res.json().catch(() => ({}))
         throw new Error(body.detail || `Server error ${res.status}`)
       }
-
       const data = await res.json()
       setResult(data)
-
-      // Add to history (prepend, deduplicate by message)
       setHistory(prev => {
         const entry = { ...data, timestamp: new Date().toISOString(), id: Date.now() }
         const filtered = prev.filter(h => h.message !== data.message)
         return [entry, ...filtered].slice(0, 50)
       })
     } catch (err) {
-      setError(err.message || 'Failed to connect to the API. Make sure the backend is running.')
+      setError(err.message || 'Failed to connect. Make sure the backend is running.')
     } finally {
       setLoading(false)
     }
@@ -79,78 +68,70 @@ export default function App() {
 
   const clearHistory = useCallback(() => {
     setHistory([])
-    localStorage.removeItem('hvsHistory')
+    localStorage.removeItem('khushiHistory')
   }, [])
 
   const replayHistory = useCallback((item) => {
     setMessage(item.message)
     setResult(item)
     setError(null)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
 
-  // Derived stats
-  const stats = {
-    total: history.length,
-    spam: history.filter(h => h.label === 'Spam').length,
-    ham:  history.filter(h => h.label === 'Ham').length,
-  }
-
   return (
-    <div className="app-root">
-      {/* Ambient background */}
-      <div className="bg-ambient" aria-hidden="true">
-        <div className="ambient-orb orb-1" />
-        <div className="ambient-orb orb-2" />
-        <div className="ambient-orb orb-3" />
-      </div>
-
+    <div className="app-root" style={{ position: 'relative', zIndex: 1 }}>
       <Header theme={theme} onToggleTheme={toggleTheme} />
 
-      <main className="main-content">
-        <section className="hero">
-          <div className="hero-badge">
-            <span className="badge-dot" />
-            AI-Powered Detection
-          </div>
+      <main className="main-wrap">
+        {/* ── Hero ── */}
+        <section className="hero-section">
+          <p className="issue-label">Deep Learning · Text Classification</p>
           <h1 className="hero-title">
-            <span className="gradient-text">Ham vs Spam</span>
-            <br />
-            Message Classifier
+            <span className="hero-title-top">Ham <em>V/s</em> Spam</span>
           </h1>
-          <p className="hero-subtitle">
-            Instantly detect whether a message is legitimate or spam using
-            our state-of-the-art deep learning model.
+          <p className="hero-byline">
+            Feed a message. The oracle decides.
           </p>
+          <div className="ornament" style={{ maxWidth: '320px', margin: '0 auto' }}>✦</div>
         </section>
 
-        <div className="content-grid">
-          <div className="primary-column">
-            <ClassifierCard
-              message={message}
-              onMessageChange={setMessage}
-              onClassify={classify}
-              loading={loading}
-            />
+        {/* ── Classifier Form ── */}
+        <section className="form-section">
+          <ClassifierCard
+            message={message}
+            onMessageChange={setMessage}
+            onClassify={classify}
+            loading={loading}
+          />
+        </section>
 
-            {(result || error) && (
-              <ResultCard result={result} error={error} />
-            )}
+        {/* ── Result ── */}
+        {(result || error) && (
+          <section className="result-section">
+            <ResultCard result={result} error={error} />
+          </section>
+        )}
 
-            {history.length > 0 && (
-              <StatsBar stats={stats} />
-            )}
-          </div>
+        {/* ── History toggle ── */}
+        {history.length > 0 && (
+          <section className="history-section">
+            <button
+              className="history-toggle-btn"
+              onClick={() => setShowHistory(v => !v)}
+            >
+              <span>{showHistory ? '↑ Hide' : '↓ Show'} History</span>
+              <span className="history-count-pill">{history.length}</span>
+            </button>
 
-          {history.length > 0 && (
-            <div className="secondary-column">
+            {showHistory && (
               <HistoryPanel
                 history={history}
                 onReplay={replayHistory}
                 onClear={clearHistory}
               />
-            </div>
-          )}
-        </div>
+            )}
+          </section>
+        )}
       </main>
 
       <Footer />

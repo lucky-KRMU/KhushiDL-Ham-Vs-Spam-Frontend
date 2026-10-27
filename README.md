@@ -1,17 +1,17 @@
-# Ham vs Spam – Frontend
+# KhushiDL — Ham V/s Spam
 
-Premium React frontend for the Ham vs Spam AI classifier. Built with Vite + React, featuring a dark/light theme, animated UI, history panel, and confidence meter.
+A vintage editorial, aesthetic text classification interface powered by deep learning. Built with React, Vite, and Tailwind CSS.
 
 ---
 
-## 🖥️ Preview
+## ✨ Features
 
-- **Hero section** with animated gradient heading and "AI-Powered Detection" live badge
-- **Classifier card** with expandable textarea, character counter, example pills, and keyboard shortcut (`⌘↵`)
-- **Result card** with animated confidence bar, verdict badge, and message preview
-- **Stats bar** showing total / ham / spam counts with a live spam-rate mini-bar
-- **History panel** (sticky sidebar) with filter tabs and one-click replay
-- **Dark / Light theme** toggle with system preference detection and localStorage persistence
+- **Typography & Aesthetic**: Editorial serif typography (*Playfair Display*, *EB Garamond*, *Courier Prime*), warm cream & ink color scheme for light mode, rich night tones for dark mode, subtle noise texture, and ink-stamp motifs.
+- **Old-School Layout**: Balanced, centered editorial structure aligned for focused reading and input.
+- **Classification Engine**: Fast inference connected to the FastAPI deep learning backend.
+- **Certainty Quotient**: Vintage gauge indicator displaying prediction confidence.
+- **Ledger & History**: Log of recent classifications with live tally stats (total, ham, spam, spam rate).
+- **Dark & Light Mode**: Warm newspaper/parchment light theme and cozy vintage dark theme, with system preference detection and localStorage persistence.
 
 ---
 
@@ -40,16 +40,5 @@ cp .env.example .env.local
 
 ```bash
 npm run build
-# Output is in ./dist — deploy to Vercel, Netlify, or any static host
+# Output is generated in ./dist
 ```
-
----
-
-## 🛠 Stack
-
-| Tool | Purpose |
-|------|---------|
-| React 18 | UI framework |
-| Vite 6 | Bundler / dev server |
-| CSS Custom Properties | Theming |
-| LocalStorage | History & theme persistence |
