@@ -21,6 +21,8 @@
 .input-body {
   position: relative;
   width: 100%;
+  border: none;
+  outline: none;
 }
 
 .claude-textarea {
@@ -28,13 +30,21 @@
   min-height: 120px;
   max-height: 380px;
   background: transparent;
-  border: none;
-  outline: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
   color: var(--text-primary);
   font-size: 1.05rem;
   line-height: 1.6;
   resize: vertical;
   padding-right: 2.2rem;
+}
+
+.claude-textarea:focus,
+.claude-textarea:focus-visible {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .claude-textarea::placeholder {
@@ -73,9 +83,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border-subtle);
+  margin-top: 0.5rem;
+  padding-top: 0.25rem;
+  border-top: none; /* Removed inner border from textarea */
 }
 
 .tray-left {
